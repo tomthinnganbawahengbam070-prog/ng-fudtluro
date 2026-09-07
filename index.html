@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Something Special 💗</title>
+
+<style>
+
+/* ==============================
+   BASIC SETUP
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe4ec,
+            #fff5f8,
+            #ffdce8
+        );
+
+    color: #5c3545;
+}
+
+
+/* ==============================
+   SLIDES
+================================ */
+
+.slider {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 45px 70px 90px;
+
+    overflow-y: auto;
+
+    opacity: 0;
+    transform: translateX(40px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+
+    pointer-events: auto;
+}
+
+
+/* ==============================
+   TITLES
+================================ */
+
+.title {
+    color: #c94f79;
+
+    font-size: 44px;
+
+    text-align: center;
+
+    margin-bottom: 10px;
+
+    text-shadow:
+        0 3px 8px rgba(150, 60, 90, 0.12);
+}
+
+.subtitle {
+    font-size: 18px;
+
+    color: #805466;
+
+    text-align: center;
+
+    margin-bottom: 22px;
+}
+
+
+/* ==============================
+   MESSAGE BOX
+================================ */
+
+.message {
+    width: 100%;
+    max-width: 750px;
+
+    background: rgba(255,255,255,0.78);
+
+    padding: 22px 28px;
+
+    border-radius: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+
+    line-height: 1.7;
+
+    margin-bottom: 28px;
+
+    box-shadow:
+        0 10px 30px rgba(150,70,100,0.12);
+
+    border: 1px solid rgba(255,255,255,0.8);
+}
+
+
+/* ==============================
+   PHOTOS
+================================ */
+
+.photo-grid {
+    width: 100%;
+    max-width: 850px;
+
+    display: grid;
+
+    gap: 14px;
+
+    justify-content: center;
+
+    margin-bottom: 25px;
+}
+
+
+/* 1 PHOTO */
+
+.one {
+    grid-template-columns: 180px;
+}
+
+
+/* 2 PHOTOS */
+
+.two {
+    grid-template-columns:
+        repeat(2, 180px);
+}
+
+
+/* 3 PHOTOS */
+
+.three {
+    grid-template-columns:
+        repeat(3, 180px);
+}
+
+
+/* 4 PHOTOS */
+
+.four {
+    grid-template-columns:
+        repeat(4, 160px);
+}
+
+
+/* 5 PHOTOS */
+
+.five {
+    grid-template-columns:
+        repeat(5, 140px);
+}
+
+
+/* PHOTO CARD */
+
+.photo-card {
+    background: white;
+
+    padding: 7px;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 7px 20px rgba(120,50,80,0.15);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.photo-card:hover {
+    transform:
+        translateY(-6px)
+        rotate(1deg);
+
+    box-shadow:
+        0 12px 25px rgba(120,50,80,0.22);
+}
+
+
+/* ACTUAL IMAGE */
+
+.photo-card img {
+    width: 100%;
+
+    height: 140px;
+
+    object-fit: cover;
+
+    display: block;
+
+    border-radius: 11px;
+}
+
+
+/* ==============================
+   PAGE NUMBER
+================================ */
+
+.page-number {
+    position: fixed;
+
+    top: 18px;
+    right: 22px;
+
+    background:
+        rgba(255,255,255,0.8);
+
+    padding: 8px 14px;
+
+    border-radius: 20px;
+
+    font-size: 14px;
+
+    box-shadow:
+        0 4px 12px rgba(120,50,80,0.1);
+
+    z-index: 50;
+}
+
+
+/* ==============================
+   ARROWS
+================================ */
+
+.arrow {
+    position: fixed;
+
+    bottom: 22px;
+
+    width: 52px;
+    height: 52px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #d95c85;
+
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    z-index: 100;
+
+    box-shadow:
+        0 6px 18px rgba(180,60,100,0.25);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+.arrow:hover {
+    transform: scale(1.12);
+
+    background: #c84873;
+}
+
+.previous {
+    left: 25px;
+}
+
+.next {
+    right: 25px;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* ==============================
+   FLOATING HEARTS
+================================ */
+
+.heart {
+    position: fixed;
+
+    bottom: -40px;
+
+    color: #e8799d;
+
+    pointer-events: none;
+
+    opacity: 0.5;
+
+    z-index: 1;
+
+    animation:
+        floatHeart linear forwards;
+}
+
+@keyframes floatHeart {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0.6;
+    }
+
+    100% {
+        transform:
+            translateY(-110vh)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* ==============================
+   MOBILE
+================================ */
+
+@media (max-width: 700px) {
+
+    .slide {
+        padding:
+            50px
+            20px
+            90px;
+    }
+
+    .title {
+        font-size: 32px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .message {
+        font-size: 16px;
+
+        padding:
+            17px
+            18px;
+    }
+
+    .photo-grid,
+    .one,
+    .two,
+    .three,
+    .four,
+    .five {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        max-width: 100%;
+    }
+
+    .photo-card img {
+        height: 120px;
+    }
+
+    .arrow {
+        width: 45px;
+        height: 45px;
+
+        bottom: 16px;
+    }
+
+    .previous {
+        left: 14px;
+    }
+
+    .next {
+        right: 14px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     ALL SLIDES
+================================================== -->
+
+<div class="slider">
+
+
+<!-- ==============================
+     PAGE 1
+================================ -->
+
+<section class="slide active">
+
+    <div class="page-number">
+        1 / 4
+    </div>
+
+    <h1 class="title">
+        I’m Sorry 💗 Baebie
+    </h1>
+
+    <p class="subtitle">
+        There’s something I need to express.
+    </p>
+
+    <div class="message">
+       
+        I’m sorry for the way I reacted and for the words I used. I let my emotions speak for me, and I know “choose the best option” was hurtful and unfair. You didn’t deserve to hear it that way.
+
+        <br><br>
+
+        I’m not apologizing for feeling hurt, but I am apologizing for how I expressed it. I could have handled the moment with more patience and maturity, and I genuinely regret that I didn’t.
+
+    </div>
+
+
+    <!--
+         ADD 1–5 PHOTOS HERE
+
+         Change the image names to your
+         actual files.
+    -->
+
+    <div class="photo-grid three">
+
+        <div class="photo-card">
+            <img src="photo 1.jfif"  width="180">
+            
+        </div>
+
+        <div class="photo-card">
+            <img src="photo 2.jfif"  width="180">
+        </div>
+
+        <div class="photo-card">
+           <video class="kisscat.mp4"  width="180" autoplay loop muted playsinline>
+    <source src="kisscat.mp4" type="video/mp4">
+</video>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==============================
+     PAGE 2
+================================ -->
+
+<section class="slide">
+
+    <div class="page-number">
+        2 / 4
+    </div>
+
+    <h1 class="title">
+        Why I Got Upset 💕
+    </h1>
+
+    <p class="subtitle">
+        Some things are difficult to say.
+    </p>
+
+    <div class="message">
+
+        Sometimes I don't really know how
+        to explain everything going through
+        my head.
+
+        <br><br>
+
+        I want to explain myself properly because I don't want this to turn into another fight.
+
+First, I know that saying “choose the best option” was harsh. I said it because I was angry and hurt, and I could have expressed myself much better. I'm sorry for the way I said it.
+
+But my feelings didn't come out of nowhere. This isn't the first time you've told me that someone or your relatives asked for your hand. You've told me about several guys already, and you've known from the previous times how I reacted. So when it keeps happening and you keep telling me about it, obviously I'm going to feel jealous and uncomfortable.
+
+I'm not saying you did something wrong just because someone asked about you. That's not necessarily something you can control. What hurts me is that this has happened multiple times, you know how it affects me, and yet I'm hearing about it again.Tabada yam nungyba dwna ngna d keim khndabi hyba oirmni but it affects me a lot.
+        
+        
+
+        <br><br>
+
+        And honestly...
+
+        <br>
+
+        I just wanted you to know that. ❤️
+
+    </div>
+
+
+    <div class="photo-grid four">
+
+        <div class="photo-card">
+            <img src="angry.gif" alt="angry.gif" width="498" height="351">
+        </div>
+
+        <div class="photo-card">
+            <video class="angrycat"  width="180" autoplay loop muted playsinline>
+    <source src="angrycat.mp4" type="video/mp4">
+</video>
+        </div>
+
+        <div class="photo-card">
+            <img src="cat.jfif" alt="cat.jfif" width="100" height="100">
+        </div>
+
+        <div class="photo-card">
+            <img src="photo6.jfif" alt="photo6.jfif" width="180" height="180">
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==============================
+     PAGE 3
+================================ -->
+
+<section class="slide">
+
+    <div class="page-number">
+        3 / 4
+    </div>
+
+    <h1 class="title">
+        What I Actually Want to Understand🌷
+    </h1>
+
+    <p class="subtitle">
+        The little things matter too.
+    </p>
+
+    <div class="message">
+
+        Maybe it's a random conversation.
+
+        <br><br>
+
+        I'm not trying to assume your intention.
+
+Maybe you're simply telling me whatever happens during your day. Maybe you feel proud or flattered that people are interested in you. Maybe you're looking for reassurance from me. Maybe you genuinely don't think about how it sounds from my side.
+
+I don't know, and that's exactly why I want you to tell me honestly.
+
+Because if the roles were reversed and I repeatedly told you that different girls were asking for my hand in marriage, knowing that it made you jealous, I honestly don't think you'd be completely fine with it.
+        
+
+        <br><br>
+
+       I'm not asking you to hide things from me. I just want you to understand that repeatedly hearing about other people being presented as potential marriage options doesn't feel good when I'm the person you're currently with.
+        i know you don't mean to hurt me, but it does hurt me. And I know you don't want to hurt me. So please, just be mindful of how it makes me feel. i know u are loyal and all but given the situation, it is hard for me to not feel hurt. I just want you to understand that.
+
+        <br><br>
+i just want to be honest with you about how I feel. I don't want to hide my feelings from you, and I hope you can understand where I'm coming from.
+    
+
+        <br>
+
+        hope you can understand my perspective and we can work through this together. I value our relationship and want to make sure we communicate openly and honestly with each other.
+
+
+    </div>
+
+
+    <div class="photo-grid five">
+
+        <div class="photo-card">
+            <img src="side eye.jfif" width="180" height="180">
+        </div>
+
+        <div class="photo-card">
+            <img src="ki.jfif" width="180" height="180">
+        </div>
+
+        <div class="photo-card">
+            <img src="photo 3.jfif">
+        </div>
+
+        <div class="photo-card">
+            <img src="noik.jfif">
+        </div>
+
+        <div class="photo-card">
+            <img src="anoi.jfif">
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==============================
+     PAGE 4
+================================ -->
+
+<section class="slide">
+
+    <div class="page-number">
+        4 / 4
+    </div>
+
+    <h1 class="title">
+        And Finally What I Need From Us💗
+    </h1>
+
+    <p class="subtitle">
+        Just one last thing.
+    </p>
+
+    <div class="message">
+
+       I don't want us to keep repeating the same cycle:
+
+You tell me something → I get jealous or angry → I say something hurtful → you get angry and block me → neither of us actually talks about the real problem.
+
+I don't want that anymore. and blocking me doesn't solve the problem. It just makes me feel like my feelings are being dismissed. I want to be able to talk about things openly and honestly without fear of being blocked or shut down.
+
+So I'm sorry for the way I reacted, but I don't want my feelings to be dismissed either.
+
+I want you to honestly tell me why you keep bringing these things up and what you expect me to feel or say when you tell me.
+
+If you're simply sharing something that happened, tell me that. If you're looking for reassurance, tell me that. If you're proud or happy about it, tell me that. And if there's something else behind it, tell me honestly.
+
+I'm willing to understand your side, but I need you to understand mine too.
+
+I'm not asking you to prove anything to me or compete with anyone. If you genuinely want to be with me, that's what matters.
+
+I just want the same understanding, honesty, and respect from you that I'm trying to give you.
+        
+
+        <br><br>
+
+        so i hope we can work through this together and come to a better understanding of each other. i love you and i want us to be happy together. 💗
+        
+       
+
+        <br><br>
+
+        you are special to me and i love you for who you are. i hope we can continue to grow and strengthen our relationship together. 💕
+        
+
+        <br><br>
+
+        And that's all I wanted to say. 🌸
+
+    </div>
+
+
+    <div class="photo-grid two">
+
+        <div class="photo-card">
+           <video width="180" autoplay loop muted playsinline>
+    <source src="shoot.mp4" type="video/mp4">
+</video> Gyan tao or me will shoot u. Hek twbaga block2
+        </div>
+
+        <div class="photo-card">
+           <video width="180" autoplay loop muted playsinline>
+    <source src="beat.mp4" type="video/mp4">
+</video> Gyan tao or me will beat u.
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+
+<!-- ==================================================
+     NAVIGATION
+================================================== -->
+
+<button
+    class="arrow previous hidden"
+    onclick="previousSlide()">
+
+    ←
+
+</button>
+
+
+<button
+    class="arrow next"
+    onclick="nextSlide()">
+
+    →
+
+</button>
+
+
+
+<script>
+
+/* ==========================================
+   SLIDE SYSTEM
+========================================== */
+
+let currentSlide = 0;
+
+const slides =
+    document.querySelectorAll(".slide");
+
+const nextButton =
+    document.querySelector(".next");
+
+const previousButton =
+    document.querySelector(".previous");
+
+
+function showSlide(index) {
+
+    slides.forEach(function(slide) {
+
+        slide.classList.remove("active");
+
+    });
+
+
+    slides[index].classList.add("active");
+
+
+    /* Previous button */
+
+    if (index === 0) {
+
+        previousButton.classList.add("hidden");
+
+    } else {
+
+        previousButton.classList.remove("hidden");
+
+    }
+
+
+    /* Next button */
+
+    if (index === slides.length - 1) {
+
+        nextButton.classList.add("hidden");
+
+    } else {
+
+        nextButton.classList.remove("hidden");
+
+    }
+
+}
+
+
+/* ==========================================
+   NEXT
+========================================== */
+
+function nextSlide() {
+
+    if (currentSlide < slides.length - 1) {
+
+        currentSlide++;
+
+        showSlide(currentSlide);
+
+    }
+
+}
+
+
+/* ==========================================
+   PREVIOUS
+========================================== */
+
+function previousSlide() {
+
+    if (currentSlide > 0) {
+
+        currentSlide--;
+
+        showSlide(currentSlide);
+
+    }
+
+}
+
+
+/* ==========================================
+   KEYBOARD CONTROLS
+========================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "ArrowRight") {
+
+            nextSlide();
+
+        }
+
+        if (event.key === "ArrowLeft") {
+
+            previousSlide();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   FLOATING HEARTS
+========================================== */
+
+function createHeart() {
+
+    const heart =
+        document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerHTML = "♡";
+
+    heart.style.left =
+        Math.random() * 100 + "%";
+
+    heart.style.fontSize =
+        14 + Math.random() * 18 + "px";
+
+    heart.style.animationDuration =
+        5 + Math.random() * 5 + "s";
+
+    document.body.appendChild(heart);
+
+
+    setTimeout(function() {
+
+        heart.remove();
+
+    }, 10000);
+
+}
+
+
+setInterval(createHeart, 700);
+
+
+/* Start */
+
+showSlide(currentSlide);
+
+</script>
+
+
+</body>
+</html>
